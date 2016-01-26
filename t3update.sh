@@ -1,16 +1,31 @@
-REMOTE_ROOT=/var/www/webX
-REMOTE_DIR=/var/www/webX/html/domainname.de
+#!/bin/bash
+#
+# ToDo:
+# - Gesamtes Backup inkl. MySQL
+# - Restore-Funktionalität
+# Current dir: /var/www/webX/files
+VERSION=6.2.17
+HTDOCS=../html
 
 # Create backup
-mkdir -p $REMOTE_ROOT/files/update_backups
-tar -zcf backup.tar.gz *
-echo "Backup erfolgreich angelegt ($REMOTE_ROOT/files/update_backups/backup.tar.gz)."
+NOW=$(date +"%Y-%m-%d")
+BACKUP_NAME="./.updater_backup/${NOW}_before_${VERSION}.tar.gz"
+
+echo "Erstelle Backup in $BACKUP_NAME..."
+mkdir -p .updater_backup
+rm ./.updater_backup/*
+#tar -zcf $BACKUP_NAME $HTDOCS/typo3 $HTDOCS/index.php
+tar -zcPf $BACKUP_NAME $HTDOCS --exclude="typo3temp" --exclude="fileadmin" --exclude="uploads" --exclude="_old"
+echo "Backup angelegt."
 
 # Download sources
-cd $REMOTE_ROOT/files/
-wget http://prdownloads.sourceforge.net/typo3/typo3_src-6.2.17.tar.gz
+rm -f typo3_src*.tar.gz
+echo "Lade TYPO3-Version $VERSION..."
+wget --quiet http://prdownloads.sourceforge.net/typo3/typo3_src-$VERSION.tar.gz
+echo "Download abgeschlossen."
 
 # Unpack sources and overwrite old version
-rm typo3_src*.tar.gz
-tar -zxf typo3_src*.tar.gz -C $REMOTE_DIR --strip 1
-rm typo3_src*.tar.gz
+echo "Entpacke Sources und überschreibe alte Version..."
+tar -zxf typo3_src-$VERSION.tar.gz -C $HTDOCS --strip 1
+rm typo3_src-$VERSION.tar.gz
+echo "Update auf TYPO3 $VERSION abgeschlossen."
