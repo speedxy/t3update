@@ -3,6 +3,8 @@
 # ToDo:
 # - Gesamtes Backup inkl. MySQL
 # - Restore-Funktionalität
+# - Abfrage der Version und ggf. der Verzeichnisse?
+# - Soll wirklich alles entpackt werden oder nur bestimmte Verzeichnisse (index.php / typo3)
 # Current dir: /var/www/webX/files
 VERSION=6.2.17
 HTDOCS=../html
