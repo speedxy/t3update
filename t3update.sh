@@ -28,4 +28,8 @@ echo "Download abgeschlossen."
 echo "Entpacke Sources und überschreibe alte Version..."
 tar -zxf typo3_src-$VERSION.tar.gz -C $HTDOCS --strip 1
 rm typo3_src-$VERSION.tar.gz
+
+# Clean installation directory
+rm $HTDOCS/_.htaccess
+
 echo "Update auf TYPO3 $VERSION abgeschlossen."
