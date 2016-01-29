@@ -1,0 +1,24 @@
+# Gruppen-Definitionen (Standard-Werte)
+groups:
+    group1:
+        status: inactive
+        htdocs: ./html
+        backup: ./files
+        ssh:
+            host: default-hostname.tld
+        mysql:
+            host: localhost
+# Profile
+profiles:
+    profile1:
+        status: active
+        group: group1
+        url: http://www.domain.tld/
+        htdocs: ./html
+        ssh:
+            user: user1
+            pass: sshpass1
+        mysql:
+            user: user1
+            pass: mysqlpass1
+            db: database1
